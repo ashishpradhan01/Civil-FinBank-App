@@ -4,6 +4,7 @@ const AuthContext = createContext();
 const initalState = {
     user: null,
     token: null,
+    services: []
 };
 
 const reducer = (state, action) => {
@@ -12,6 +13,8 @@ const reducer = (state, action) => {
             return { user: action.payload.user, token: action.payload.token }
         case "Logout":
             return { user: null, token: null }
+        case "Service":
+            return { services: action.payload.services, ...state }
         default:
             return state;
     }
@@ -31,7 +34,11 @@ export default function AuthProvider({ children }) {
         dispatch({ type: "Logout" });
     }
 
-    return <AuthContext.Provider value={{ state, setLogin, setLogout }}>
+    const setServices = (services) => {
+        dispatch({ type: "Service", payload: { services } });
+    }
+
+    return <AuthContext.Provider value={{ state, setLogin, setLogout, setServices }}>
         {children}
     </AuthContext.Provider>
 }

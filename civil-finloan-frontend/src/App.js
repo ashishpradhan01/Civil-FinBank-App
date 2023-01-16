@@ -7,11 +7,40 @@ import HomePage from "pages/HomePage";
 import JoinAsMember from "pages/JoinAsMember";
 import LoginPage from "pages/LoginPage";
 import ServicePage from "pages/ServicePage";
+import { useEffect } from "react";
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 
+const getAllServices = async (token) => {
+  const serviceResponse = await fetch("http://localhost:7070/api/v1/services", {
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+    method: "GET",
+  });
+  if (serviceResponse.status === 200) {
+    return await serviceResponse.json();
+  }
+  return [];
+};
+
 function App() {
-  const { state } = useAuthContext();
+  const { state, setServices } = useAuthContext();
   const isAuth = Boolean(state.token);
+
+  useEffect(() => {
+    if (isAuth) {
+      getAllServices(state.token)
+        .then((data) => {
+          setServices(data);
+        })
+        .catch((err) => {
+          console.log("[Nav Service]", err);
+          setServices([]);
+        });
+    }
+  }, [state]);
+
   return (
     <div className="App">
       <BrowserRouter>

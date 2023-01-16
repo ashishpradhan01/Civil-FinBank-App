@@ -3,13 +3,14 @@ import { useAuthContext } from 'auth/AuthProvider';
 import FlexBetween from 'components/FlexBetween';
 import NavBar from 'components/NavBar';
 import React, { useState } from 'react'
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 export default function LoginPage() {
     const { setLogin } = useAuthContext();
     const navigate = useNavigate();
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const location = useLocation();
     const login = async (data) => {
         const savedUserResponse = await fetch(
             "http://localhost:7070/api/v1/auth/login",
@@ -23,9 +24,9 @@ export default function LoginPage() {
         );
         const savedUser = await savedUserResponse.json();
         if (savedUser) {
-            console.log(savedUser);
+            // console.log(savedUser);
             setLogin(savedUser)
-            navigate("/")
+            location.state ? navigate(location.state.previousUrl) : navigate('/')
         }
         else {
             console.log("something went wrong")

@@ -8,7 +8,7 @@ import { useNavigate } from 'react-router-dom';
 export default function HomePage() {
     const { state, logout } = useAuthContext();
     const isAuth = Boolean(state.token);
-    console.log(state);
+
 
     return (
         <>

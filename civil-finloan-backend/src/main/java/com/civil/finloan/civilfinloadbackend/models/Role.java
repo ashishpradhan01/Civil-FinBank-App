@@ -2,8 +2,8 @@ package com.civil.finloan.civilfinloadbackend.models;
 
 public enum Role {
 	
-	USER("user"),
-	ADMIN("admin");
+	USER("USER"),
+	ADMIN("ADMIN");
 	public String name;
 	
 	Role(String role) {

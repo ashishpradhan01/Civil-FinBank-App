@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom';
 
 export default function AddService() {
     const navigate = useNavigate();
-    const { state } = useAuthContext();
+    const { state, setServices } = useAuthContext();
     const [type, setType] = useState("");
     const [code, setCode] = useState("");
     const [description, setDescription] = useState("");
@@ -23,7 +23,8 @@ export default function AddService() {
                 body: JSON.stringify(data),
             }
         );
-        if (savedServiceResponse.status == "201") {
+        if (savedServiceResponse.status == 201) {
+            setServices([...state.services, await savedServiceResponse.json()])
             navigate("/")
         }
         else {

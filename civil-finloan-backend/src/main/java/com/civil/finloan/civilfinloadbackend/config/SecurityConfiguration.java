@@ -36,7 +36,7 @@ public class SecurityConfiguration{
 		.csrf().disable()
 		.authorizeHttpRequests()
 		.requestMatchers("/api/v1/auth/**").permitAll()
-		.requestMatchers(HttpMethod.POST, "/api/v1/services").hasRole(Role.ADMIN.name)
+		//.requestMatchers(HttpMethod.POST, "/api/v1/services").hasRole(Role.ADMIN.name())
 		.anyRequest().authenticated()
 		.and()
 		.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)

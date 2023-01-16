@@ -3,6 +3,7 @@ package com.civil.finloan.civilfinloadbackend.controllers;
 import java.util.List;
 
 import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -44,8 +45,8 @@ public class ServiceController {
 
 	@PostMapping("/services")
 	public ResponseEntity<Object> createService(@RequestBody Service service) {
-		serviceRepository.save(service);
-		return new ResponseEntity<>(HttpStatus.CREATED);
+		Service serv = serviceRepository.save(service);
+		return ResponseEntity.status(HttpStatus.CREATED).body(serv);
 	}
 
 	@PostMapping("/services/{id}/detail")
