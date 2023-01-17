@@ -139,7 +139,8 @@ textarea {
 }
 
 .form input,
-textarea {
+textarea,
+.emi-select {
   width: 100%;
   padding: 8px 10px;
   margin: 5px;
@@ -214,4 +215,11 @@ header > div {
   /* color: var(--primary-text-color); */
   font-weight: 700;
   font-size: 2rem;
+}
+
+.error {
+  color: red;
+}
+.success {
+  color: green;
 }

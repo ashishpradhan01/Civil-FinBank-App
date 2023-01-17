@@ -24,7 +24,6 @@ export default function LoginPage() {
         );
         const savedUser = await savedUserResponse.json();
         if (savedUser) {
-            // console.log(savedUser);
             setLogin(savedUser)
             location.state ? navigate(location.state.previousUrl) : navigate('/')
         }
@@ -35,7 +34,6 @@ export default function LoginPage() {
 
     return (
         <>
-            <NavBar />
             <FlexBetween style={{ justifyContent: "center", padding: "50px" }}>
                 <form onSubmit={(e) => {
                     e.preventDefault()

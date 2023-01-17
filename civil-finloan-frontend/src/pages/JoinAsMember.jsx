@@ -14,6 +14,28 @@ export default function JoinAsMember() {
     const [mobile, setMobile] = useState(isAuth ? state.user.mobile : "");
     const [password, setPassword] = useState("");
 
+    const update = async (data) => {
+        const savedUserResponse = await fetch(
+            "http://localhost:7070/api/v1/auth/update",
+            {
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                method: "PUT",
+                body: JSON.stringify(data),
+            }
+        );
+        const savedUser = await savedUserResponse.json();
+
+        if (savedUser) {
+            setLogin(savedUser)
+            navigate("/")
+        }
+        else {
+            console.log("Something went wrong")
+        }
+    }
+
     const register = async (data) => {
         const savedUserResponse = await fetch(
             "http://localhost:7070/api/v1/auth/register",
@@ -28,27 +50,40 @@ export default function JoinAsMember() {
         const savedUser = await savedUserResponse.json();
 
         if (savedUser) {
-            console.log(savedUser);
             setLogin(savedUser)
             navigate("/")
         }
         else {
-            console.log("something went wrong")
+            console.log("Something went wrong")
         }
     };
     return (
         <>
-            <NavBar />
             <FlexBetween style={{ justifyContent: "center", padding: "50px" }}>
                 <form onSubmit={(e) => {
                     e.preventDefault()
-                    const data = {
-                        "fullName": name,
-                        email,
-                        mobile: Number(mobile),
-                        password
+
+                    if (isAuth) {
+                        let data = {
+                            "id": state.user.id,
+                            "fullName": name,
+                            "email": state.user.email,
+                            "mobile": Number(mobile),
+                            "password": state.user.password,
+                            "role": state.user.role
+                        }
+                        update(data);
                     }
-                    register(data);
+                    else {
+                        let data = {
+                            "fullName": name,
+                            "email": email,
+                            "mobile": Number(mobile),
+                            "password": password
+                        }
+                        register(data);
+                    }
+
                 }}>
                     <fieldset className='form'>
                         {isAuth ? <legend>Update Member</legend> : <legend>Join As Member</legend>}
@@ -65,13 +100,13 @@ export default function JoinAsMember() {
                         </div>
                         <div>
                             <label htmlFor="email"><b>Email</b></label>
-                            {isAuth ? <input id="email" type="email" required value={state.user.email} /> :
+                            {isAuth ? <input id="email" type="email" required value={state.user.email} disabled /> :
                                 <input id="email" type="email" required value={email} onChange={(e) => setEmail(e.target.value)} />}
                         </div>
-                        <div>
+                        {isAuth ? null : <div>
                             <label htmlFor="password"><b>Password</b></label>
                             <input id="password" type="password" required value={password} onChange={(e) => setPassword(e.target.value)} />
-                        </div>
+                        </div>}
                         {isAuth ? <button className='primary-button'>Update</button> :
                             <button className='primary-button'>Join Us</button>}
                     </fieldset>

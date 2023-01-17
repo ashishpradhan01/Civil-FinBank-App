@@ -58,7 +58,7 @@ public class ServiceController {
 		}
 		detail.setService(service);
 		detailRepository.save(detail);
-		return new ResponseEntity<>(HttpStatus.CREATED);
+		return ResponseEntity.status(HttpStatus.CREATED).body(service);
 	}
 
 }

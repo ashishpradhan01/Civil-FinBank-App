@@ -44,6 +44,14 @@ public class User implements UserDetails {
 		this.id = id;
 	}
 	
+	public void setFullName(String name) {
+		this.fullName = name;
+	}
+
+	public void setMobile(long mobile) {
+		this.mobile= mobile;
+	}
+	
 	public int getId() {
 		return id;
 	}
@@ -70,7 +78,7 @@ public class User implements UserDetails {
 	
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
-		return List.of(new SimpleGrantedAuthority(role.name));
+		return List.of(new SimpleGrantedAuthority("ROLE_"+role.name));
 	}
 
 	@Override

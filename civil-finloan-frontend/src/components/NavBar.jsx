@@ -17,19 +17,18 @@ export default function NavBar() {
                     <div className="nav-links">
                         <ul className="flex">
                             <li><Link to="/aboutus" className="hover-link">About Us</Link></li>
-                            {isAuth ? <li className='services'><Link to="" className="hover-link">Services</Link>
+                            <li className='services'><Link to="" className="hover-link">Services</Link>
                                 <ul className='dropdown'>
-                                    {services.map((service) => <li key={service.id}><Link to={`/service/${service.id}`} className="hover-link">{service.type}</Link></li>)}
+                                    {services.map((service) => <li key={service.id}><Link to={`/services/${service.id}`} className="hover-link">{service.type}</Link></li>)}
                                 </ul>
-                            </li> : null}
+                            </li>
                         </ul>
                     </div>
                 </FlexBetween>
                 <FlexBetween>
                     <div className="nav-links">
                         <ul className="flex">
-                            {/* {isAuth && state.user.role == "ADMIN" ? */}
-                            <li><Link to="/addservice" className="hover-link">Add Service</Link></li>
+                            {isAuth && state.user.role == "ADMIN" ? <li><Link to="/addservice" className="hover-link">Add Service</Link></li> : null}
                             <li><Link to="/emicalculator" className="hover-link">EMI Calculator</Link></li>
                             <li> {isAuth ? <Link to="/update" className="hover-link">Update Profile</Link> :
                                 <Link to="/joinasmember" className="hover-link">Join as a member</Link>}

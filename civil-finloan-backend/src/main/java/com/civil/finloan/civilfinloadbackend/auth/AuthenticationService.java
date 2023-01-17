@@ -8,6 +8,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.civil.finloan.civilfinloadbackend.config.JwtService;
+import com.civil.finloan.civilfinloadbackend.exception.UserNotFoundException;
 import com.civil.finloan.civilfinloadbackend.models.Role;
 import com.civil.finloan.civilfinloadbackend.models.user.User;
 import com.civil.finloan.civilfinloadbackend.models.user.UserRepository;
@@ -39,6 +40,16 @@ public class AuthenticationService {
 //		}
 
 		logger.info(user.toString());
+		userReposisRepository.save(user);
+		var jwtToken = jwtService.generateToken(user);
+		var authResponse = new AuthenticationResponse(jwtToken, user);
+		return authResponse;
+	}
+	
+	public AuthenticationResponse update(User updateUser) {
+		User user = userReposisRepository.findById(updateUser.getId()).orElse(null);
+		user.setFullName(updateUser.getFullName());
+		user.setMobile(updateUser.getMobile());
 		userReposisRepository.save(user);
 		var jwtToken = jwtService.generateToken(user);
 		var authResponse = new AuthenticationResponse(jwtToken, user);

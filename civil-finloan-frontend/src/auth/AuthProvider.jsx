@@ -10,11 +10,11 @@ const initalState = {
 const reducer = (state, action) => {
     switch (action.type) {
         case "Login":
-            return { user: action.payload.user, token: action.payload.token }
+            return { ...state, user: action.payload.user, token: action.payload.token }
         case "Logout":
-            return { user: null, token: null }
+            return { ...state, user: null, token: null }
         case "Service":
-            return { services: action.payload.services, ...state }
+            return { ...state, services: action.payload.services }
         default:
             return state;
     }

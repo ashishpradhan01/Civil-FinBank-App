@@ -14,14 +14,13 @@ const getAllServices = async (token) => {
   const serviceResponse = await fetch("http://localhost:7070/api/v1/services", {
     headers: {
       "Content-Type": "application/json",
-      Authorization: `Bearer ${token}`,
     },
     method: "GET",
   });
   if (serviceResponse.status === 200) {
     return await serviceResponse.json();
   }
-  return [];
+  return new Promise((res, rej) => {});
 };
 
 function App() {
@@ -29,32 +28,34 @@ function App() {
   const isAuth = Boolean(state.token);
 
   useEffect(() => {
-    if (isAuth) {
-      getAllServices(state.token)
-        .then((data) => {
-          setServices(data);
-        })
-        .catch((err) => {
-          console.log("[Nav Service]", err);
-          setServices([]);
-        });
-    }
-  }, [state]);
+    getAllServices(state.token)
+      .then((data) => {
+        setServices(data);
+      })
+      .catch((err) => {
+        setServices([]);
+      });
+  }, []);
 
   return (
     <div className="App">
       <BrowserRouter>
+        <NavBar />
         <Routes>
           <Route
             path="/login"
             element={isAuth ? <Navigate to="/" /> : <LoginPage />}
           ></Route>
           <Route path="/" element={<HomePage />}></Route>
+          <Route path="/services/:serviceId" element={<ServicePage />}></Route>
           <Route
             path="/addservice"
             element={
-              // isAuth && state.user.role == "ADMIN" ? (
-              true ? <AddService /> : <Navigate to="/" />
+              isAuth && state.user.role === "ADMIN" ? (
+                <AddService />
+              ) : (
+                <Navigate to="/" />
+              )
             }
           >
             {" "}
