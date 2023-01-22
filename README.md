@@ -2,7 +2,7 @@
 
 Civil Finloan is an application for Finance Management. This application lets the user view the details of various loan types, apply for an enquiry, calculate the interest amount for the specific loan and make a request on money remittance.
 
-<img src="https://github.com/ashishpradhan01/RiseNews-MVVM-App/blob/adding_country_chips/Light_App_Icon.png?raw=true" alt="Raise News Application" width="220" height="250">
+<img src="https://github.com/ashishpradhan01/Civil-FinLoan-App/blob/master/homepage.png?raw=true" alt="Raise News Application" width="220" height="250">
 
 ## SpringBoot API's
 
